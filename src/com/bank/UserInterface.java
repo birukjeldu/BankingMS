@@ -69,13 +69,19 @@ public class UserInterface {
 
     //Main page of Customer after login
     public static void customerPage(){
+        int userIndex =  Customer.logIndex;
         Scanner in = new Scanner(System.in);
-        System.out.println("--------------- Welcome Back Customer ---------------");
+        if (userIndex != -1){
+            System.out.println("--------------- Welcome Back "+Manager.listOfCustomer.get(userIndex).getName() +" ---------------");
+        }else {
+            System.out.println("--------------- Welcome Back Customer ---------------");
+        }
+
         System.out.println("\t A) Display Account Information");
         System.out.println("\t B) Withdraw Cash");
         System.out.println("\t C) Check Balance");
         System.out.println("\t D) Transfer to other Account");
-        //System.out.println("\t E) Delete Account");
+        System.out.println("\t E) See Transaction");
         System.out.println("\t F) Log Out");
         try{
             String option;
@@ -94,6 +100,9 @@ public class UserInterface {
                     break;
                 case "D":
                     Customer.transferHandler();
+                    break;
+                case "E":
+                    Customer.transactionList();
                     break;
                 case "F":
                     Customer.logOut();

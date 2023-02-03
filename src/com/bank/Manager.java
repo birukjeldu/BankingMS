@@ -1,17 +1,18 @@
 package com.bank;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.SQLException;
+//import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Manager {
     private String name;
     private String password;
     static ArrayList<Customer> listOfCustomer = new ArrayList<>();
+    static ArrayList<Transaction> transactionList = new ArrayList<>();
 
     public Manager() {
 
@@ -134,7 +135,7 @@ public class Manager {
         //To check if the account number is available
         if (listOfCustomer != null) {
             int flag = isAccountFound(accNum);
-            while( flag== -1){
+            while( flag == -1){
                 System.out.println("\t !! Account doesn't exist !!");
                 System.out.print("\t Enter Account Number: ");
                 accNum = in.next();
@@ -157,11 +158,19 @@ public class Manager {
                 }
                 //converting the user input to double
                 Double finalCashAmount = Double.parseDouble(cashAmount);
+                Transaction tran = new Transaction();
+                Date date = new Date();
+                tran.setAmount(finalCashAmount);
+                tran.setSign('+');
+                tran.setDate(date);
+                tran.setAccNumber(Integer.parseInt(accNum));
+                tran.setMessage("Deposit");
                 int index = isAccountFound(accNum);
                 double oldBalance = listOfCustomer.get(index).getBalance();
                 double newBalance = oldBalance + finalCashAmount;
                 //Updating the balance of the user
                 listOfCustomer.get(index).setBalance(newBalance);
+                transactionList.add(tran);
                 System.out.println("Balance updated successfully. New balance = "+listOfCustomer.get(index).getBalance()+" Birr");
             }
 
